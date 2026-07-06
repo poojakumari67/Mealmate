@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g%tmqk&+^8j8!o*0so26yp-#g$bg4g=u4j0u@9zeoa222x6%lm'
+#SECRET_KEY = 'django-insecure-g%tmqk&+^8j8!o*0so26yp-#g$bg4g=u4j0u@9zeoa222x6%lm'
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "your-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -116,8 +119,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
+#RAZORPAY_KEY_ID = "rzp_test_SmScOS30Z34EmN"
+#RAZORPAY_KEY_SECRET = "dYAbxdRR7712x8XEEUNgdLWj"
 
-RAZORPAY_KEY_ID = "rzp_test_SmScOS30Z34EmN"
-RAZORPAY_KEY_SECRET = "dYAbxdRR7712x8XEEUNgdLWj"
+RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.environ.get("RAZORPAY_KEY_SECRET")
